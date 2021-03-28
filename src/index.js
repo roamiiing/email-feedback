@@ -1,6 +1,7 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const yup = require('yup');
+const cors = require('cors');
 
 const schema = yup.object({
   name: yup
@@ -39,6 +40,7 @@ const transporter = nodemailer.createTransport({
 const app = express();
 
 app.use(express.json());
+app.use(cors('*'));
 
 app.get('/', (req, res) => {
   res.json({
