@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const yup = require('yup');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 
 const schema = yup.object({
   name: yup
@@ -48,6 +49,11 @@ app.get('/', (req, res) => {
     message: 'Make a POST request to "/" to send your message',
   });
 });
+
+app.use(rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 10,
+}));
 
 app.post('/', async (req, res, next) => {
   const { body } = req;
