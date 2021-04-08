@@ -25,7 +25,7 @@ const schema = yup.object({
 });
 
 const {
-  SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS,
+  SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, ORIGIN,
 } = process.env;
 
 const transporter = nodemailer.createTransport({
@@ -41,7 +41,7 @@ const transporter = nodemailer.createTransport({
 const app = express();
 
 app.use(express.json());
-app.use(cors('*'));
+app.use(cors(ORIGIN || '*'));
 
 app.get('/', (req, res) => {
   res.json({
